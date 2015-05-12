@@ -1,0 +1,44 @@
+{
+	"AWSTemplateFormatVersion": "2010-09-09",
+	"Resources": {
+	    "newEC2Instance": {
+			"Type": "AWS::EC2::Instance",
+			"Properties": {
+				"DisableApiTermination": "false",
+				"InstanceInitiatedShutdownBehavior": "stop",
+				"ImageId": "ami-cbf90ecb",
+				"InstanceType": "t2.micro",
+				"KeyName": "ebitech",
+				"Monitoring": "true",
+				"Tags": [{
+					"Key": "Name",
+					"Value": { "Ref" : "InstanceName"}
+				}],
+				"NetworkInterfaces" : [{
+		            "DeviceIndex": 0,
+                    "PrivateIpAddresses": [
+			          {
+			            "PrivateIpAddress": { "Ref" : "privateIPAddress"},
+			            "Primary": "true"
+			          }
+			        ],
+					"AssociatePublicIpAddress" : "true",
+					"SubnetId": "subnet-f9d7748e",
+					"GroupSet": [ "sg-6266be07" ],
+					"SubnetId": "subnet-f9d7748e"
+				}]
+			}
+  		}
+	},
+	"Parameters": {
+	    "privateIPAddress": {
+	      "Description" : "THis EC2 Instance's Private IP Address.",
+	      "Type": "String"
+	    },
+	    "InstanceName": {
+	      "Description" : "THis EC2 Instance's Name.",
+	      "Type": "String"
+    	}
+	},
+	"Description": "まずはテストでEC2を作ってみます。adamからコピーした情報のうち、必要最低限のものを利用しています。"
+}
